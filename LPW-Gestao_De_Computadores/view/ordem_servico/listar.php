@@ -3,6 +3,9 @@ require_once(__DIR__ . "/../../controller/OrdemServicoController.php");
 
 $ordemServicoCont = new OrdemServicoController();
 $lista = $ordemServicoCont->listar();
+
+
+
 include_once(__DIR__ . "/../include/header.php");
 ?>
 
@@ -34,7 +37,15 @@ include_once(__DIR__ . "/../include/header.php");
                             <td><?= $ordem->getCliente()->getNome() ?></td>
                             <td><?= date("d/m/Y", strtotime($ordem->getDataEntrada())) ?></td>
                             <td><?= date("d/m/Y", strtotime($ordem->getPrazoEstimadoSaida())) ?></td>
-                            <td><?= $ordem->getStatus() ?></td>
+                            <td>
+                                <select class="form-control" id="status" name="status" onchange="alterarStatus(<?= $ordem->getId() ?>)" >
+                                    <option value="">Selecione</option>
+                                    <option value="Aberta" <?= ($ordem->getStatus() == "Aberta") ? "selected" : "" ?>>Aberta</option>
+                                    <option value="Em andamento" <?= ($ordem->getStatus() == "Em andamento") ? "selected" : "" ?>>Em andamento</option>
+                                    <option value="Concluída" <?= ($ordem->getStatus() == "Concluída") ? "selected" : "" ?>>Concluída</option>
+                                    <option value="Cancelada" <?= ($ordem->getStatus() == "Cancelada") ? "selected" : "" ?>>Cancelada</option>
+                                </select>
+                            </td>
                             <td>
                                 <div class="d-flex justify-content-center gap-2">
                                     <a href="alterar.php?id=<?= $ordem->getId() ?>" class="btn btn-outline-primary btn-sm">Editar</a>
@@ -52,5 +63,7 @@ include_once(__DIR__ . "/../include/header.php");
         </div>
     </div>
 </div>
+
+<script src="ordem_servico.js"></script>
 
 <?php include_once(__DIR__ . "/../include/footer.php"); ?>

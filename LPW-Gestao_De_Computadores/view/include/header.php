@@ -9,7 +9,7 @@
     <title>Gestão de Computadores</title>
 </head>
 
-<body style="background: linear-gradient(-130deg, var(--bg-darker), var(--bg-dark),   var(--bg-dark));">
+<body >
     <?php
     $isHome = basename($_SERVER['PHP_SELF']) === 'home.php';
     $navbarClass = $isHome ? 'navbar-home' : '';
