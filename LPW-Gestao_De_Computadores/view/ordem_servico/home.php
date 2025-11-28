@@ -1,23 +1,13 @@
 <?php include_once(__DIR__ . "/../include/header.php"); ?>
 
-<div class="relative w-screen h-screen overflow-hidden">
 
-    
+<div class="position-relative vw-100 vh-100 overflow-hidden d-flex align-items-center justify-content-center">
+    <div class="text-center p-4 rounded-3 shadow" >
+        <h2 class="h3 fw-bold text-black mb-3">Bem-vindo ao Sistema de Gestão de Computadores</h2>
+        <p class="text-black mb-4">Gerencie ordens de serviço, cadastros e clientes de forma simples e intuitiva.</p>
 
-    <div class="absolute justify-center items-center text-center z-10 bg-black/40">
-        <h2 class="text-3xl font-bold mb-4 z-20 ">Bem-vindo ao Sistema de Gestão de Computadores</h2>
-        <p class="text-lg mb-6">Gerencie ordens de serviço, cadastros e clientes de forma simples e intuitiva.</p>
-
-        <a href="listar.php"
-            class="px-6 py-3 bg-blue-600 hover:bg-blue-700 rounded text-white font-semibold">
+        <a href="listar.php" class="btn btn-primary btn-lg">
             Começar Agora
         </a>
     </div>
-    <img
-        src="../../images/cpu.png"
-        alt="Imagem de Computador"
-        class="w-[20px] z-[-10]">
-
 </div>
-
-<?php include_once(__DIR__ . "/../include/footer.php"); ?>

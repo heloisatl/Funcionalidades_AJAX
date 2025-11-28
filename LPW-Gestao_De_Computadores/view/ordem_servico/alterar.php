@@ -69,22 +69,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 include_once(__DIR__ . "/../include/header.php");
 ?>
 
-<link rel="stylesheet" href="../estilo/style.css">
 
-<h3 style="color:white;padding: 40px 0 20px 0">Editar Ordem de Serviço</h3>
+<h3 style="color:black;padding: 40px 0 20px 0">Editar Ordem de Serviço</h3>
 
 <?php if ($msgErro): ?>
     <div class="alert alert-danger"><?= $msgErro ?></div>
 <?php endif; ?>
 
 <?php if ($ordemServico): ?>
-    <form method="POST" action="" style="color: white">  
+    <form method="POST" action="" style="color: black">  
         <input type="hidden" name="id" value="<?= htmlspecialchars($ordemServico->getId()) ?>">
         <div class="mb-3">
             <label for="descricao_problema" class="form-label">Descrição do Problema</label>
             <textarea class="form-control" id="descricao_problema" name="descricao_problema" ><?= htmlspecialchars($ordemServico->getDescricaoProblema()) ?></textarea>
         </div>
-        <div class="mb-3" style="color: white">
+        <div class="mb-3" style="color: black">
             <label for="id_cliente" class="form-label">Cliente</label>
             <select class="form-control" id="id_cliente" name="id_cliente" >
                 <option value="">Selecione o Cliente</option>
@@ -95,7 +94,7 @@ include_once(__DIR__ . "/../include/header.php");
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="mb-3" style="color: white">
+        <div class="mb-3" style="color: black">
             <label for="id_tipo_servico" class="form-label">Tipo de Serviço</label>
             <select class="form-control" id="id_tipo_servico" name="id_tipo_servico" >
                 <option value="">Selecione o Tipo de Serviço</option>
@@ -106,17 +105,17 @@ include_once(__DIR__ . "/../include/header.php");
                 <?php endforeach; ?>
             </select>
         </div>
-        <div class="mb-3" style="color: white">
+        <div class="mb-3" style="color: whiblackte">
             <label for="data_entrada" class="form-label">Data de Entrada</label>
             <input type="date" class="form-control" id="data_entrada" name="data_entrada"
                 value="<?= htmlspecialchars(substr($ordemServico->getDataEntrada(), 0, 10)) ?>" >
         </div>
-        <div class="mb-3" style="color: white">
+        <div class="mb-3" style="color: black">
             <label for="prazo_estimado_saida" class="form-label">Prazo Estimado de Saída</label>
             <input type="date" class="form-control" id="prazo_estimado_saida" name="prazo_estimado_saida"
                 value="<?= htmlspecialchars($ordemServico->getPrazoEstimadoSaida()) ?>" >
         </div>
-        <div class="mb-3" style="color: white">
+        <div class="mb-3" style="color: black">
             <label for="status" class="form-label">Status</label>
             <select class="form-control" id="status" name="status" >
                 <option value="">Selecione</option>
@@ -130,5 +129,3 @@ include_once(__DIR__ . "/../include/header.php");
         <a href="listar.php" class="btn btn-outline-primary">Voltar</a>
     </form>
 <?php endif; ?>
-
-<?php include_once(__DIR__ . "/../include/footer.php"); ?>

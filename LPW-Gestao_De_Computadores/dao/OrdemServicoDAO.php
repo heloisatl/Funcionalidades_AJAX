@@ -5,15 +5,18 @@ require_once(__DIR__ . "/../model/OrdemServico.php");
 require_once(__DIR__ . "/../model/Cliente.php");
 require_once(__DIR__ . "/../model/TipoServico.php");
 
-class OrdemServicoDAO {
+class OrdemServicoDAO
+{
 
     private PDO $conexao;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->conexao = Connection::getConnection();
     }
 
-    public function listar(): array {
+    public function listar(): array
+    {
         $sql = "SELECT os.*, 
                        cl.id AS cl_id, cl.nome AS cl_nome, cl.telefone, cl.email,
                        ts.id AS ts_id, ts.nome AS ts_nome
@@ -30,7 +33,8 @@ class OrdemServicoDAO {
 
 
 
-    public function buscarPorId(int $id) {
+    public function buscarPorId(int $id)
+    {
         $sql = "SELECT os.*, 
                        cl.id AS cl_id, cl.nome AS cl_nome, cl.telefone, cl.email,
                        ts.id AS ts_id, ts.nome AS ts_nome
@@ -47,7 +51,8 @@ class OrdemServicoDAO {
         return count($ordens) > 0 ? $ordens[0] : null;
     }
 
-    public function inserir(OrdemServico $ordem): ?PDOException {
+    public function inserir(OrdemServico $ordem): ?PDOException
+    {
         try {
             $sql = "INSERT INTO ordem_servico 
                         (descricao_problema, data_abertura, prazo_estimado, status, id_cliente, id_tipo_servico)
@@ -62,12 +67,13 @@ class OrdemServicoDAO {
                 $ordem->getTipoServico()->getId()
             ]);
             return null;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             return $e;
         }
     }
 
-    public function alterar(OrdemServico $ordem): ?PDOException {
+    public function alterar(OrdemServico $ordem): ?PDOException
+    {
         try {
             $sql = "UPDATE ordem_servico
                        SET descricao_problema = ?, data_abertura = ?, prazo_estimado = ?, 
@@ -84,7 +90,7 @@ class OrdemServicoDAO {
                 $ordem->getId()
             ]);
             return null;
-        } catch(PDOException $e) {
+        } catch (PDOException $e) {
             return $e;
         }
     }
@@ -102,9 +108,10 @@ class OrdemServicoDAO {
         }
     }
 
-    private function map(array $result): array {
+    private function map(array $result): array
+    {
         $ordens = [];
-        foreach($result as $r) {
+        foreach ($result as $r) {
             $ordem = new OrdemServico();
             $ordem->setId($r["id"]);
             $ordem->setDescricaoProblema($r["descricao_problema"]);
@@ -131,5 +138,34 @@ class OrdemServicoDAO {
         return $ordens;
     }
 
-    
+    public function alterarStatus(OrdemServico $ordem): ?\PDOException
+    {
+        try {
+            $sql = "UPDATE ordem_servico
+                    SET `status` = ?,
+                        `prazo_estimado` = ?
+                    WHERE id = ?";
+
+            $stm = $this->conexao->prepare($sql);
+
+            $prazo = $ordem->getPrazoEstimadoSaida();
+
+            // Bind dos parâmetros
+            if ($prazo === null || trim((string)$prazo) === '') {
+                $stm->bindValue(1, $ordem->getStatus(), PDO::PARAM_STR);
+                $stm->bindValue(2, null, PDO::PARAM_NULL);
+                $stm->bindValue(3, $ordem->getId(), PDO::PARAM_INT);
+            } else {
+                $stm->bindValue(1, $ordem->getStatus(), PDO::PARAM_STR);
+                $stm->bindValue(2, $prazo, PDO::PARAM_STR);
+                $stm->bindValue(3, $ordem->getId(), PDO::PARAM_INT);
+            }
+
+            $stm->execute();
+
+            return null;
+        } catch (\PDOException $e) {
+            return $e;
+        }
+    }
 }

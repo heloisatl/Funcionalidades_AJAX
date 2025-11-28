@@ -27,5 +27,3 @@ include_once(__DIR__ . "/../include/header.php");
     <?= $msgErro ?>
 </div>
 <a href="listar.php" class="btn btn-outline-primary">Voltar</a>
-
-<?php include_once(__DIR__ . "/../include/footer.php"); ?>

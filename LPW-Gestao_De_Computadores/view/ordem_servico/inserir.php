@@ -4,14 +4,11 @@ require_once __DIR__ . "/../../model/OrdemServico.php";
 require_once __DIR__ . "/../../model/Cliente.php";
 require_once __DIR__ . "/../../model/TipoServico.php";
 
-$msgErro = "";
-
 $ordemServicoCont = new OrdemServicoController();
 
 $clientes = $ordemServicoCont->listarClientes();
 $tiposServico = $ordemServicoCont->listarTiposServico();
 
-// Inicializar variáveis para manter dados no form
 $descricaoProblema = '';
 $dataEntrada = '';
 $prazoEstimado = '';
@@ -19,7 +16,6 @@ $status = '';
 $idCliente = '';
 $idTipoServico = '';
 
-// Verificar o método HTTP
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $descricaoProblema = $_POST['descricao_problema'] ?? '';
@@ -28,6 +24,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $status = $_POST['status'] ?? '';
     $idCliente = $_POST['id_cliente'] ?? '';
     $idTipoServico = $_POST['id_tipo_servico'] ?? '';
+
+    $bloqueados = ["Concluida", "Cancelada", "Concluída", "cancelada"];
+
+    if (in_array($status, $bloqueados)) {
+        echo "Não é permitido criar uma ordem Concluída ou Cancelada.";
+        exit;
+    }
 
     $ordemServico = new OrdemServico();
     $ordemServico->setDescricaoProblema($descricaoProblema);
@@ -46,15 +49,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $resultado = $ordemServicoCont->cadastrar($ordemServico);
 
     if ($resultado === null) {
-       
-        header("location: listar.php?msg=Ordem cadastrada com sucesso!");
+        echo "Ordem cadastrada com sucesso";
         exit;
     } else {
         if (is_array($resultado)) {
-            $msgErro = implode("<br>", $resultado);
+            echo implode("<br>", $resultado);
         } else {
-            $msgErro = "Erro desconhecido";
+            echo "Erro desconhecido";
         }
+        exit;
     }
 }
 

@@ -49,5 +49,3 @@ include_once(__DIR__ . "/../include/header.php");
         </div>
     </div>
 </div>
-
-<?php include_once(__DIR__ . "/../include/footer.php"); ?>

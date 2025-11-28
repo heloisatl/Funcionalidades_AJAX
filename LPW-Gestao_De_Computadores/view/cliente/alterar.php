@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <?php include_once(__DIR__ . "/../include/header.php"); ?>
 
-<div class="container my-5">
+<div class="container my-5 text-black">
     <div class="row justify-content-center">
         <div class="col-md-5">
             <div class="form-card p-4">
@@ -89,5 +89,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
-
-<?php include_once(__DIR__ . "/../include/footer.php"); ?>
